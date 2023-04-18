@@ -49,6 +49,20 @@
 
         //route => controller => function => view
     }
+    
+    function route(string $path,array $queries = null):string{ //query from data passing
+        $url = url($path);
+        if(!is_null($queries)){
+            $url .= "?".http_build_query($queries); //convert to uri
+        }
+        return $url;
+    }
 
+    function redirect($url):void{
+        header("Location:".$url);
+    }
+
+
+    
 
 ?>
