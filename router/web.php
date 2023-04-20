@@ -10,14 +10,33 @@
             "/" => "page@home",
             "/about-us" => "page@about",
             "/list" => "list@index",
+            "/list-create" => "list@create",
+            // "/list-store" => [
+            //     "method" => "post",
+            //     "run" => "list@store"
+            // ],
+            "/list-store" => ["post","list@store"],
+            "/list-edit" => "list@edit",
+            "/list-update" => ["put","list@update"],
+            "/list-delete" => ["delete","list@delete"]
 
 
         ];
 
         //dd(Routes[$path] );  //in_array => values
-        if(array_key_exists($path,Routes)){ //key,array
-            dd(Routes[$path]);
-        }else{
+        if(array_key_exists($path,Routes) && is_array(Routes[$path]) && checkRequestMethod(Routes[$path][0])){ //key,array
+            
+            //dd(Routes[$path]);
+            //dd($_SERVER["REQUEST_METHOD"]);
+            //dd($_SERVER);
+            controller(Routes[$path][1]);
+
+            
+        }elseif(array_key_exists($path,Routes) && !is_array(Routes[$path])){
+            //dd(Routes[$path]);
+            controller(Routes[$path]);
+        }
+        else{
             view("not-found");
         }
 

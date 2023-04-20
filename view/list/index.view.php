@@ -24,7 +24,12 @@
                     <td>
                         <a href="<?= route("list-edit",["id" => $list['id']]) ?>" class="btn btn-primary btn-sm mx-3">  Edit  </a>
                                         <!-- convert into uri -->
-                        <a href="<?= route("list-delete",["id" => $list['id']]) ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <form action="<?= route("list-delete") ?>" method="post" class=" d-inline-block">
+                            <input type="hidden" name="_method" value="delete">
+                            <input type="hidden" name="id" value="<?=  $list['id'] ?>">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        <!-- <a href="<?= route("list-delete",["id" => $list['id']]) ?>" class="btn btn-danger btn-sm">Delete</a> -->
                     </td>
                 </tr>
             <?php endforeach; ?>

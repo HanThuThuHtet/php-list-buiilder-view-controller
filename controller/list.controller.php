@@ -30,7 +30,7 @@
 
 
     function delete(){
-        $id = $_GET['id'];
+        $id = $_POST['id'];
         $sql = "DELETE FROM my WHERE id=$id";
         $query = mysqli_query($GLOBALS["connect"],$sql);
         if($query){

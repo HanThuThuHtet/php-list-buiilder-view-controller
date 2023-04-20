@@ -62,6 +62,22 @@
         header("Location:".$url);
     }
 
+    function checkRequestMethod(string $methodName){
+        $result = false;
+        $methodName = strtoupper($methodName); //post,POST
+        $serverRequestMethod = $_SERVER["REQUEST_METHOD"];
+        if($methodName === "POST" && $serverRequestMethod === "POST" ){
+            $result = true;
+        }
+        elseif($methodName === "PUT" && $serverRequestMethod === "POST" && !empty($_POST["_method"]) &&  strtoupper($_POST["_method"]) === "PUT") {//_method from html form
+            $result = true;
+        }
+        elseif($methodName === "DELETE" && $serverRequestMethod === "POST" && !empty($_POST["_method"]) && strtoupper($_POST["_method"]) === "DELETE"){
+            $result = true;
+        }
+        return $result;
+    }
+
 
     
 
