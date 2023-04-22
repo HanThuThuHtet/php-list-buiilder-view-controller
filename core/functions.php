@@ -78,7 +78,38 @@
         return $result;
     }
 
+    //Start database function
 
+    function run(string $sql,bool $closeConnection = true):object|bool{
+        // $query = mysqli_query($GLOBALS["connect"],$sql);
+        // $closeConnection &&  mysqli_close($GLOBALS["connect"]);
+        // return $query;
+        try{
+            $query = mysqli_query($GLOBALS["connect"],$sql);
+            $closeConnection &&  mysqli_close($GLOBALS["connect"]);
+            return $query;
+        }catch(Exception $e){
+            dd($e);
+        }
+    }
+
+
+    function all(string $sql):array{
+        $lists = [];
+        $query = run($sql);
+        while ($row = mysqli_fetch_assoc($query)){
+            $lists[]= $row;
+        }
+        return $lists;
+    }
+
+    function first(string $sql):array{
+        $query = run($sql);
+        $list = mysqli_fetch_assoc($query);
+        return $list;
+    }
+
+    //End database function
     
 
 ?>
