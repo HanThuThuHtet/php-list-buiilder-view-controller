@@ -12,6 +12,29 @@
         //     $lists[] = $row ;
         // }
         //return view("list/index",["lists" => $lists]);
+
+        $total = first("SELECT count(id) AS total FROM my")["total"];
+        //dd($total); //100
+        $limit = 10;
+        $totalPages = $total / $limit;
+        $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+        $offset = ($currentPage - 1) * $limit;
+        $sql .= " LIMIT $offset,$limit";
+        //dd(all($sql));
+
+
+        //total ?
+        //limit => rows per page => 10,5,....
+        //totalPage = total/limit
+
+        //currentPage 1 
+        //offset = 0 =( currentPage - 1 ) * limit
+
+        //SELECT * FROM my LIMIT 0,10;
+        //SELECT * FROM my LIMIT 10,10;
+        //SELECT * FROM my LIMIT 20,10;
+        
+
         return view("list/index",["lists" => all($sql)]);
     }
 
@@ -25,13 +48,14 @@
         $debt = $_POST['debt'];
         $sql = "INSERT INTO my (name,debt) VALUES ('$name',$debt)";
         $query = run($sql);
+        //setSession("List Created Successfully!");
         //dd($query); //1 -true
         //dd($GLOBALS["connect"]);
-        mysqli_close($GLOBALS["connect"]);
-        dd($GLOBALS["connect"]);
+        //mysqli_close($GLOBALS["connect"]);
+        //dd($GLOBALS["connect"]);
         if($query){
             //header("Location: ".route("list"));
-            redirect(route("list"));
+            redirect(route("list"),"List Created Successfully!");
         }
         //return view("list/store");
     }
@@ -41,8 +65,9 @@
         $id = $_POST['id'];
         $sql = "DELETE FROM my WHERE id=$id";
         $query = run($sql);
+        //setSession("List Deleted Successfully!");
         if($query){
-            redirect(route("list"));
+            redirect(route("list"),"List Deleted Successfully!");
         }
     }
 
@@ -62,7 +87,8 @@
         $debt = $_POST['debt'];
         $sql = "UPDATE my SET name='$name',debt=$debt WHERE id=$id";
         $query = run($sql);
-        redirect(route("list"));
+        //setSession("List Updated Successfully!");
+        redirect(route("list"),"List Updated Successfully!");
     }
 
 
