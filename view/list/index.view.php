@@ -12,7 +12,7 @@
     </div>
     <?php if(isset($_GET['q'])): ?>
         <div class="row align-items-center justify-content-between py-2 border border border-2 mx-0 mb-3">                    
-            <p class="col-6 d-inline-block mb-0"><b><?= $query->num_rows ?></b> results for name matching <b><?= $_GET['q'] ?></b> </p>
+            <p class="col-6 d-inline-block mb-0"><b><?= $lists["total"] ?></b> results for name matching <b><?= $_GET['q'] ?></b> </p>
             <div class="col-6 text-end">
                 <a href="<?= route("list") ?>" class="btn btn-secondary d-inline-block">
                     <i class="bi bi-x"></i> Clear filter
@@ -31,7 +31,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($lists as $list) : ?>
+                    <!-- from listcontroller index -->
+            <?php foreach($lists["data"] as $list) : ?> 
                 <tr>
                     <td><?= $list['id'] ?></td>
                     <td><?= $list['name'] ?></td>
@@ -51,7 +52,19 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-
+    <?= paginator($lists) ?>
+                
+    <!-- <div class=" d-flex justify-content-between">
+        <p class="mb-0">Total : <?= $lists["total"] ?></p>
+        <nav aria-label="Page navigation example">
+            <ul class=" pagination">
+                <?php foreach($lists["links"] as $link): ?>
+                <li class=" page-item"><a href="<?= $link['url'] ?>" class=" page-link <?= $link["is_active"] ?>"><?=  $link["page_number"]?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </nav>
+    </div> -->
+   
 
 <?php 
     // dd($lists);

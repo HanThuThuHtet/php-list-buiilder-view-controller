@@ -13,14 +13,36 @@
         // }
         //return view("list/index",["lists" => $lists]);
 
-        $total = first("SELECT count(id) AS total FROM my")["total"];
-        //dd($total); //100
-        $limit = 10;
-        $totalPages = $total / $limit;
-        $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
-        $offset = ($currentPage - 1) * $limit;
-        $sql .= " LIMIT $offset,$limit";
-        //dd(all($sql));
+        //$total = first("SELECT count(id) AS total FROM my")["total"];
+        // $total = first(str_replace("*","COUNT(id) AS total",$sql))["total"];
+        // //dd($total); //100
+        // $limit = 10;
+        // $totalPages = ceil($total / $limit);
+        // $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+        // $offset = ($currentPage - 1) * $limit;
+        // $sql .= " LIMIT $offset,$limit";
+        // $links = [];
+        // for($i = 1 ; $i <= $totalPages ; $i++){
+        //     $queries = $_GET;
+        //     $queries["page"] = $i;
+        //     $url = url().$GLOBALS['path']."?".http_build_query($queries);
+        //     //$url = url().$GLOBALS['path']."?page=".$i;
+        //     //$links[] = url().$GLOBALS["path"]."?page=".$i;
+        //     $links[] = [
+        //         "url" => $url,
+        //         "is_active" => $i == $currentPage ? "active" : "",
+        //         "page_number" => $i
+        //     ];
+        // }
+        // $lists = [
+        //     "total" => $total,
+        //     "limit" => $limit,
+        //     "total_page" => $totalPages,
+        //     "current_page" => $currentPage,
+        //     "data" => all($sql),
+        //     "links" => $links
+        // ];
+        //dd($lists);
 
 
         //total ?
@@ -35,7 +57,8 @@
         //SELECT * FROM my LIMIT 20,10;
         
 
-        return view("list/index",["lists" => all($sql)]);
+        //return view("list/index",["lists" => all($sql)]);
+        return view("list/index",["lists" => paginate($sql,8)]);
     }
 
     function create(){
@@ -67,7 +90,8 @@
         $query = run($sql);
         //setSession("List Deleted Successfully!");
         if($query){
-            redirect(route("list"),"List Deleted Successfully!");
+            //redirect(route("list"),"List Deleted Successfully!");
+            redirect($_SERVER["HTTP_REFERER"],"List Deleted Successfully!"); //after delete from page 4 redirect to page 4
         }
     }
 
@@ -88,7 +112,8 @@
         $sql = "UPDATE my SET name='$name',debt=$debt WHERE id=$id";
         $query = run($sql);
         //setSession("List Updated Successfully!");
-        redirect(route("list"),"List Updated Successfully!");
+        //redirect(route("list"),"List Updated Successfully!");
+        redirect($_SERVER["HTTP_REFERER"],"List Updated Successfully!"); 
     }
 
 

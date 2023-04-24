@@ -83,6 +83,23 @@
         return "<div class='alert alert-$color'>$message</div>";
     }
 
+    function paginator($lists){
+        $links = "";
+        foreach($lists['links'] as $link){
+            $links .= "<li class='page-item'><a class='page-link ". $link['is_active'] ."' href='". $link['url']."'>".  $link['page_number']."</a></li>";
+        }
+       
+        return "<div class=' d-flex justify-content-between'>
+        <p class='mb-0'>Total : " .$lists['total'] . "</p>
+        <nav aria-label='Page navigation example'>
+            <ul class=' pagination'>
+                ".$links."
+            </ul>
+        </nav>
+    </div>";
+
+    }
+
     //Start Session Function
 
     function setSession(string $message ,string $key="message"):void{
@@ -134,6 +151,38 @@
         $query = run($sql);
         $list = mysqli_fetch_assoc($query);
         return $list;
+    }
+
+    function paginate($sql,$limit = 10){
+        $total = first(str_replace("*","COUNT(id) AS total",$sql))["total"];
+        //dd($total); //100
+        //$limit = 10;
+        $totalPages = ceil($total / $limit);
+        $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+        $offset = ($currentPage - 1) * $limit;
+        $sql .= " LIMIT $offset,$limit";
+        $links = [];
+        for($i = 1 ; $i <= $totalPages ; $i++){
+            $queries = $_GET;
+            $queries["page"] = $i;
+            $url = url().$GLOBALS['path']."?".http_build_query($queries);
+            //$url = url().$GLOBALS['path']."?page=".$i;
+            //$links[] = url().$GLOBALS["path"]."?page=".$i;
+            $links[] = [
+                "url" => $url,
+                "is_active" => $i == $currentPage ? "active" : "",
+                "page_number" => $i
+            ];
+        }
+        $lists = [
+            "total" => $total,
+            "limit" => $limit,
+            "total_page" => $totalPages,
+            "current_page" => $currentPage,
+            "data" => all($sql),
+            "links" => $links
+        ];
+        return $lists;
     }
 
     //End database function

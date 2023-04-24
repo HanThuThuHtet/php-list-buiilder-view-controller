@@ -7,4 +7,6 @@
     require_once ProjectDir."/core/functions.php";
     require_once RouterDir."/web.php";
 
+    //dd($_SERVER);
+
 ?>
