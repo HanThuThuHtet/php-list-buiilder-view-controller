@@ -100,6 +100,12 @@
 
     }
 
+    //more log file color => https://i.stack.imgur.com/HFSl1.png
+
+    function logger(string $message , int $colorCode = 32):void{
+        echo " \e[39m[LOG]"."\e[{$colorCode}m" . $message . "\n";
+    }
+
     //Start Session Function
 
     function setSession(string $message ,string $key="message"):void{
@@ -183,6 +189,25 @@
             "links" => $links
         ];
         return $lists;
+    }
+
+    function createTable(string $tableName,...$columns ):void{
+        // $sql = "DROP TABLE IF EXISTS $tableName;";
+        // run($sql);
+        // logger("table ".$tableName ." is successfully deleted",93);
+
+        $sql = "CREATE TABLE $tableName (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            -- `name` varchar(50) NOT NULL,
+            -- `debt` int(11) NOT NULL,
+            ".join(",",$columns).",
+            `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+            PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+        run($sql);
+        logger("table ".$tableName ." is successfully created");
+
     }
 
     //End database function

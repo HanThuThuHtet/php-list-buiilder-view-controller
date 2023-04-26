@@ -78,7 +78,7 @@
         //dd($GLOBALS["connect"]);
         if($query){
             //header("Location: ".route("list"));
-            redirect(route("list"),"List Created Successfully!");
+             return redirect(route("list"),"List Created Successfully!");
         }
         //return view("list/store");
     }
@@ -91,7 +91,7 @@
         //setSession("List Deleted Successfully!");
         if($query){
             //redirect(route("list"),"List Deleted Successfully!");
-            redirect($_SERVER["HTTP_REFERER"],"List Deleted Successfully!"); //after delete from page 4 redirect to page 4
+           return redirect($_SERVER["HTTP_REFERER"],"List Deleted Successfully!"); //after delete from page 4 redirect to page 4
         }
     }
 
@@ -113,7 +113,7 @@
         $query = run($sql);
         //setSession("List Updated Successfully!");
         //redirect(route("list"),"List Updated Successfully!");
-        redirect($_SERVER["HTTP_REFERER"],"List Updated Successfully!"); 
+        return redirect($_SERVER["HTTP_REFERER"],"List Updated Successfully!"); 
     }
 
 
