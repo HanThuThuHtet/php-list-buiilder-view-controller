@@ -192,9 +192,9 @@
     }
 
     function createTable(string $tableName,...$columns ):void{
-        // $sql = "DROP TABLE IF EXISTS $tableName;";
-        // run($sql);
-        // logger("table ".$tableName ." is successfully deleted",93);
+        $sql = "DROP TABLE IF EXISTS $tableName;";
+        run($sql);
+        logger("table ".$tableName ." is successfully deleted",93);
 
         $sql = "CREATE TABLE $tableName (
             `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -204,7 +204,7 @@
             `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
             `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
             PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
         run($sql);
         logger("table ".$tableName ." is successfully created");
 

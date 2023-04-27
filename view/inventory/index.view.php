@@ -24,7 +24,7 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
+                <th>Item</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Created At</th>
@@ -36,7 +36,7 @@
             <?php foreach($lists["data"] as $list) : ?> 
                 <tr>
                     <td><?= $list['id'] ?></td>
-                    <td><?= $list['name'] ?></td>
+                    <td><?= $list['item'] ?></td>
                     <td><?= $list['price'] ?></td>
                     <td><?= $list['stock'] ?></td>
                     <td><?= $list['created_at'] ?></td>

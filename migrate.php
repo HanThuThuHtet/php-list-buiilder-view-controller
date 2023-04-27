@@ -7,8 +7,10 @@
     $tables = all("show tables");
     //print_r($tables);
     foreach ($tables as $table){
-        $tableName = $table['Tables_in_sann_kyi_tar'];
-        run("DROP TABLE IF EXISTS ".$tableName);
+        // $tableName = $table['Tables_in_sann_kyi_tar'];
+        // run("DROP TABLE IF EXISTS ".$tableName)
+        run("DROP TABLE IF EXISTS ".$table['Tables_in_sann_kyi_tar']);
+
         
     }
 
@@ -27,4 +29,6 @@
 
     //SELECT * FROM information_schema.'TABLES' WHERE TABLE_SCHEMA = "sann_kyi_tar";
     //SELECT CONCAT(" DROP TABLE IF EXISTS ",TABLE_NAME,";") FROM information_schema.'TABLES' WHERE TABLE_SCHEMA = "sann_kyi_tar"
+
+    createTable("users","name varchar(50) NOT NULL","email varchar(50) NOT NULL","gender enum('male','female') NOT NULL","address TEXT NOT NULL");
 ?>

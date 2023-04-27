@@ -9,8 +9,8 @@
         <form action="<?= route("inventory-store") ?>" method="post">
             <div class="row align-items-end">
                 <div class="col">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class=" form-control" name="name" required>
+                    <label for="item" class="form-label">Item</label>
+                    <input type="text" class=" form-control" name="item" required>
                 </div>
                 <div class="col">
                     <label for="price" class="form-label">Price</label>
