@@ -18,6 +18,39 @@
         $item = $_POST['item'];
         $price = $_POST['price'];
         $stock = $_POST['stock'];
+        if(empty(trim($_POST['item']))){
+            dd("item name required");
+        }elseif(strlen($_POST['item']) < 3){
+            dd("item name is too short");
+        }elseif(strlen($_POST['item']) > 10){
+            dd("item name is too long");
+        }elseif(!preg_match("/^[a-zA-Z0-9 ]*$/",$_POST['item'])){
+            dd("item name unmatched");
+        }
+
+        if(empty(trim($_POST['price']))){
+            dd("price required");
+        }elseif(!is_numeric($_POST['price'])){
+            dd("price must be number");
+        }elseif($_POST['price'] < 100){
+            dd("price must be greater than 100");
+        }elseif($_POST['price'] > 999999){
+            dd("price must be less than 999999");
+        }
+
+        if(empty(trim($_POST['stock']))){
+            dd("stock required");
+        }elseif(!is_numeric($_POST['stock'])){
+            dd("stock must be number");
+        }elseif($_POST['stock'] < 1){
+            dd("stock must be greater than 1");
+        }elseif($_POST['stock'] > 999999){
+            dd("stock must be less than 999999");
+        }
+
+
+
+        dd("data ready");
         //$sql = "INSERT INTO inventories (item,price,stock) VALUES ('$item',$price,$stock)";
         run("INSERT INTO inventories (item,price,stock) VALUES ('$item',$price,$stock)");
         return redirect(route("inventory"),"Item Created Successfully!");

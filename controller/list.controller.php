@@ -3,7 +3,7 @@
     function index(){
         $sql = "SELECT * FROM my";
         if(!empty($_GET["q"])){
-            $q = $_GET["q"];
+            $q = sanitizer($_GET["q"],true);
             $sql .= " WHERE name LIKE '%$q%' ";
         }
         //$query = run($sql);
@@ -67,7 +67,7 @@
 
     function store(){
         //dd($_POST);
-        $name = $_POST['name'];
+        $name = sanitizer($_POST['name']);
         $debt = $_POST['debt'];
         $sql = "INSERT INTO my (name,debt) VALUES ('$name',$debt)";
         $query = run($sql);

@@ -70,10 +70,10 @@
         if($methodName === "POST" && $serverRequestMethod === "POST" ){
             $result = true;
         }
-        elseif($methodName === "PUT" && $serverRequestMethod === "POST" && !empty($_POST["_method"]) &&  strtoupper($_POST["_method"]) === "PUT") {//_method from html form
+        elseif($methodName === "PUT" && ( $serverRequestMethod ==="PUT" ||($serverRequestMethod === "POST" && !empty($_POST["_method"]) &&  strtoupper($_POST["_method"]) === "PUT"))) {//_method from html form
             $result = true;
         }
-        elseif($methodName === "DELETE" && $serverRequestMethod === "POST" && !empty($_POST["_method"]) && strtoupper($_POST["_method"]) === "DELETE"){
+        elseif($methodName === "DELETE" && ($serverRequestMethod === "DELETE" || ($serverRequestMethod === "POST" && !empty($_POST["_method"]) && strtoupper($_POST["_method"]) === "DELETE"))){
             $result = true;
         }
         return $result;
@@ -104,6 +104,16 @@
 
     function logger(string $message , int $colorCode = 32):void{
         echo " \e[39m[LOG]"."\e[{$colorCode}m" . $message . "\n";
+    }
+
+    //Api
+    function responseJson(mixed $data, int $status = 200):string{
+        header("Content-type:Application/json");
+        http_response_code($status);
+        if(is_array($data)){
+            return print(json_encode($data));
+        }
+        return print(json_encode(["message" => $data]));
     }
 
     //Start Session Function
@@ -211,6 +221,22 @@
     }
 
     //End database function
+
+    //Injection => XSS
+    function sanitizer(string $str , bool $strip = false){
+        // $str = str_replace("script","",$str);
+        // $str = trim($str,"<></>");
+        //$str = strip_tags($str);
+        if($strip){
+            $str = strip_tags($str);
+            $str = trim($str,"<></>");
+        }
+        //$str = trim($str);
+        
+        $str = htmlentities($str,ENT_QUOTES);
+        $str = stripslashes($str);
+        return $str;
+    }
     
 
 ?>

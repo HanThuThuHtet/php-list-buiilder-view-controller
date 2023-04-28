@@ -26,7 +26,13 @@
             "/inventory-store" => ["post","inventory@store"],
             "/inventory-edit" => "inventory@edit",
             "/inventory-update" => ["put","inventory@update"],
-            "/inventory-delete" => ["delete","inventory@delete"]
+            "/inventory-delete" => ["delete","inventory@delete"],
+
+            "/api/users" => "user@index",
+            "/api/user" => "user@show",
+            "/api/user-store" => ["post","user@store"],
+            "/api/user-update" => ["put","user@update"],
+            "/api/user-delete" => ["delete","user@delete"]
 
 
         ];

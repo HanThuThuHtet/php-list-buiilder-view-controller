@@ -22,7 +22,7 @@
 
     // createTable("a","name varchar(50) NOT NULL","phone varchar(20) NOT NULL","email varchar(50) NOT NULL");
     // createTable("b","name varchar(50) NOT NULL","debt int(11) NOT NULL");
-    createTable("my","name varchar(50) NOT NULL","debt int(11) NOT NULL");
+    createTable("my","name varchar(100) NOT NULL","debt int(11) NOT NULL");
     // -- `name` varchar(50) NOT NULL,
     // -- `debt` int(11) NOT NULL,
     createTable("inventories","item varchar(20) NOT NULL","price int(11) NOT NULL","stock int(11) NOT NULL");
