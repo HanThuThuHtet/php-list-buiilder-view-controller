@@ -9,6 +9,8 @@
         const Routes = [
             "/" => "page@home",
             "/about-us" => "page@about",
+            "/display-session" => "page@displaySession",
+
             "/list" => "list@index",
             "/list-create" => "list@create",
             // "/list-store" => [

@@ -1,6 +1,9 @@
 <?php
 
     //die and dump
+
+use JetBrains\PhpStorm\Internal\ReturnTypeContract;
+
     function dd($data,$showType = false):void{
         echo "<pre style=' background-color:#1d1d1d ; color:#cdcdcd; padding: 20px ; margin : 10px ; border-radius: 10px ; line-height: 1.2rem;'>";
         if($showType){
@@ -63,6 +66,10 @@
         header("Location:".$url);
     }
 
+    function redirectBack(string $message=null):void{
+        redirect($_SERVER["HTTP_REFERER"],$message);
+    }
+
     function checkRequestMethod(string $methodName){
         $result = false;
         $methodName = strtoupper($methodName); //post,POST
@@ -116,6 +123,58 @@
         return print(json_encode(["message" => $data]));
     }
 
+
+    //Start Validation Function
+
+    function setError(string $key ,string $message):void{
+        $_SESSION["error"][$key] = $message;
+    }
+    function includeError(string $key):bool{
+        if(!empty($_SESSION["error"][$key])) return true;
+        return false;
+    }
+    function showError(string $key):string{
+        $message = $_SESSION["error"][$key];
+        unset ($_SESSION["error"][$key]);
+        return $message;
+    }
+
+    function old(string $key):string|null{
+        if(isset($_SESSION['old'][$key])){
+            $data = $_SESSION['old'][$key];
+            unset($_SESSION['old'][$key]);
+            return $data;
+        }
+        return null;
+    }
+
+    function validationStart():void{
+        unset($_SESSION['old']);
+        unset($_SESSION['error']);
+        $_SESSION["old"] = $_POST;
+    }
+    function validationEnd(bool $isApi = false):void{
+        if(includeSession("error")){
+            //dd("back");
+            if($isApi){
+                //responseJson(showSession('error'));
+                responseJson([
+                    "status" => false,
+                    "errors" => showSession('error')
+                ]);
+            }else{
+                redirectBack();
+            }
+            die();
+           
+        }else{
+            unset($_SESSION['old']);
+        }
+    }
+
+
+    //End Validation Function
+
     //Start Session Function
 
     function setSession(string $message ,string $key="message"):void{
@@ -128,7 +187,7 @@
         return false;
     }
 
-    function showSession(string $key = "message"):string{
+    function showSession(string $key = "message"):string|array{
         $message = $_SESSION[$key];
         unset($_SESSION[$key]);
         return $message;

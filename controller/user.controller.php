@@ -12,6 +12,38 @@
     function store(){
         //dd($_POST);
         //return responseJson($_POST);
+        validationStart();
+
+        if(empty($_POST['name'])){
+            setError("name","name required");
+        }elseif(strlen($_POST['name']) < 3){
+            setError("name","name is too short");
+        }elseif(strlen($_POST['name']) > 10){
+            setError("name","name is too long");
+        }elseif(!preg_match("/^[a-zA-Z0-9 ]*$/",$_POST['name'])){
+            setError("name","name unmatched");
+        }
+
+
+        if(empty($_POST['email'])){
+            setError("email","email required");
+        }elseif(strlen($_POST['email']) < 3){
+            setError("email","email is too short");
+        }elseif(strlen($_POST['email']) > 10){
+            setError("email","email is too long");
+        }elseif(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
+            setError("email","email unmatched");
+        }
+
+
+        if(empty($_POST['gender'])){
+            setError("gender","gender required");
+        }elseif( !in_array($_POST['gender'],['male','female']) ){
+            setError("gender","gender must be male or female");
+        }
+
+        validationEnd(true);
+
         $name = $_POST['name'];
         $email = $_POST['email'];
         $gender = $_POST['gender'];

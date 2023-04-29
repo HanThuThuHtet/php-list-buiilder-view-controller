@@ -7,18 +7,43 @@
 
     <div class=" border rounded p-5">
         <form action="<?= route("inventory-store") ?>" method="post">
-            <div class="row align-items-end">
+            <div class="row align-items-center">
                 <div class="col">
                     <label for="item" class="form-label">Item</label>
-                    <input type="text" class=" form-control" name="item">
+                    <input 
+                     type="text"
+                     value="<?= old('item') ?>"
+                     class=" form-control <?php echo includeError('item') ? 'is-invalid' : '' ?>" 
+                     name="item">
+                    <?php if(includeError('item')):  ?>
+                        <div class=" invalid-feedback">
+                            <?= showError('item') ?>
+                        </div>
+                    <?php endif;  ?>
                 </div>
                 <div class="col">
                     <label for="price" class="form-label">Price</label>
-                    <input type="number" class=" form-control" name="price">
+                    <input 
+                    type="number" 
+                    value="<?= old('price') ?>"
+                    class=" form-control <?php echo includeError('price') ? 'is-invalid' : '' ?>" name="price">
+                    <?php if(includeError('price')):  ?>
+                        <div class=" invalid-feedback">
+                            <?= showError('price'); ?>
+                        </div>
+                    <?php endif;  ?>
                 </div>
                 <div class="col">
                     <label for="stock" class="form-label">Stock</label>
-                    <input type="number" class=" form-control" name="stock">
+                    <input 
+                     type="number"
+                     value="<?= old('stock') ?>"
+                     class=" form-control <?php echo includeError('stock') ? 'is-invalid' : '' ?>" name="stock">
+                    <?php if(includeError('stock')):  ?>
+                        <div class=" invalid-feedback">
+                            <?= showError('stock'); ?>
+                        </div>
+                    <?php endif;  ?>
                 </div>
                 <div class="col">
                     <button class="btn btn-secondary shadow-sm w-50">Add Item</button>

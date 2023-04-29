@@ -8,4 +8,9 @@
         return view("about");
     }
 
+    function displaySession(){
+        //session_unset();
+        dd($_SESSION);
+    }
+
 ?>
